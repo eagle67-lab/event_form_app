@@ -1,1 +1,7 @@
+# Example requirements.txt file
 
+streamlit
+pandas
+streamlit_searchbox
+functools
+datetime
