@@ -1,9 +1,0 @@
-# Example requirements.txt file
-
-streamlit
-pandas
-functools
-datetime
-docx.shared
-docxtpl
-streamlit_searchbox
