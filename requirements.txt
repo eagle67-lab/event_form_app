@@ -2,9 +2,8 @@
 
 streamlit
 pip
+python
 pandas
 functools
 datetime
-docx.shared
-docxtpl
 streamlit_searchbox
