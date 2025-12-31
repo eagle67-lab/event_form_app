@@ -2,6 +2,8 @@
 
 streamlit
 pandas
-streamlit_searchbox
 functools
 datetime
+docx.shared
+docxtpl
+streamlit_searchbox
