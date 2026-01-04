@@ -95,16 +95,43 @@ def testing(): # working! - get numbers & call and show when nedded..
         event_contact_name = st.text_input("שם איש הקשר")
         event_contact_role = st.text_input("תפקיד איש הקשר")
         event_contact_phone = st.text_input("איש קשר - מס' טלפון")
+    
+
+        
+    new_row_data = {'שעה': a, 'תוכנית': b, 'מיקום': c, 'הערה': d}
+    new_row_df = pd.DataFrame([new_row_data]) # Must be in a list to create a DataFrame
+    new_data = pd.concat([df, new_row_df], ignore_index=True)
+    return new_data
+    # Loop to create rows of input widgets
 
 
+    num_rows = st.slider('Number of rows', min_value=1, max_value=15)
+    data = {}
+    df = pd.DataFrame(data)   
+    for r in range(num_rows):
+        df = add_row(r,df)
 
-st.title("V0.0.2 Demo")
+
+    st.dataframe(df)
+
+    temp = st.text_input("something")
+
+    data = {'Name': ['Tom', 'Mike', 'Kate'], 'Age': [25, 30, 35]}
+    df = pd.DataFrame(data) # Default integer index (0, 1, 2)
+    df.iat[1, 1] = 31
+
+    st.write(df.iat[1, 1])
+    df.iat[1, 1] = temp
+
+    st.table(df)
+
+    new_row_data = {'Name': 'Charlie', 'Age': 35}
+    new_row_df = pd.DataFrame([new_row_data]) # Must be in a list to create a DataFrame
+    df = pd.concat([df, new_row_df], ignore_index=True)
 
 
-    # columns to lay out the inputs
+    df.iat[1, 1] = 45
 
-
-    # Function to create a row of widgets (with row number input to assure unique keys)
 def add_row(row,df):
     grid = st.columns(4)
     with grid[0]:
@@ -117,62 +144,20 @@ def add_row(row,df):
         a = st.time_input('זמן', key=f'input_col1{row}')
         a = a.strftime('%H:%M')
 
-    
-    new_row_data = {'שעה': a, 'תוכנית': b, 'מיקום': c, 'הערה': d}
-    new_row_df = pd.DataFrame([new_row_data]) # Must be in a list to create a DataFrame
-    new_data = pd.concat([df, new_row_df], ignore_index=True)
-    return new_data
-    # Loop to create rows of input widgets
+q_selected_value = False
+
+st.title("V0.0.2 Demo")
 
 
-num_rows = st.slider('Number of rows', min_value=1, max_value=15)
-data = {}
-df = pd.DataFrame(data)   
-for r in range(num_rows):
-    df = add_row(r,df)
+    # columns to lay out the inputs
 
 
-st.dataframe(df)
+    # Function to create a row of widgets (with row number input to assure unique keys)
 
-
-
-
-
-
-temp = st.text_input("something")
-
-data = {'Name': ['Tom', 'Mike', 'Kate'], 'Age': [25, 30, 35]}
-df = pd.DataFrame(data) # Default integer index (0, 1, 2)
-df.iat[1, 1] = 31
-
-st.write(df.iat[1, 1])
-df.iat[1, 1] = temp
-
-st.table(df)
-
-new_row_data = {'Name': 'Charlie', 'Age': 35}
-new_row_df = pd.DataFrame([new_row_data]) # Must be in a list to create a DataFrame
-df = pd.concat([df, new_row_df], ignore_index=True)
-
-
-df.iat[1, 1] = 45
-
-####################
 df = pd.read_excel('eventDB.xlsx')
-filtered_df = df[df["שם הספק"] == supplier and df["סוג השירות"] == act]
-all_mony_names = filtered_df[''].values
-#####################
-
 # Access data from a specific column
 all_supplier_names = df['שם הספק'].values
 unique_supplier_names = sorted(set(all_supplier_names))
-
-option = st.selectbox(
-    "How would you like to be contacted?",
-    ("Email", "Home phone", "Mobile phone"),
-    index=None, #extra param not working..
-)
-st.write("You selected:", option)
 
 
 t = st.time_input("Set an alarm for", value = None)
@@ -203,12 +188,33 @@ selected_value = st_searchbox(
 st.write(f"Selected/Typed value: {selected_value}")
 
 # Pass the search function to the component
-search_with_params = partial(q_search_function, supplier=selected_value)
-q_selected_value = st_searchbox(
-    search_with_params,
-    key="event",
-    placeholder="Search for a event...",
-)
+if(selected_value):
+    search_with_params = partial(q_search_function, supplier=selected_value)
+    q_selected_value = st_searchbox(
+        search_with_params,
+        key="event",
+        placeholder="Search for a event...",
+    )
+
+if(q_selected_value):
+    df = pd.read_excel('eventDB.xlsx')
+    filtered_df = df[(df["שם הספק"] == selected_value) & (df["סוג השירות"] == q_selected_value)] 
+    # Access data from a specific column
+    no_mam = filtered_df['מחיר ללא מעמ'].values
+    yes_mam = filtered_df['מחיר (כולל מעמ)'].values
+    all_o_names = (no_mam,yes_mam)
+
+    st.write(f"Selected/Typed value: {all_o_names}")
+
+if(q_selected_value):
+    df = pd.read_excel('eventDB.xlsx')
+    filtered_df = df[(df["שם הספק"] == selected_value) & (df["סוג השירות"] == q_selected_value)] 
+    # Access data from a specific column
+    stut = filtered_df['סטטוס'].values
+    do_mam = filtered_df['האם משלם מעמ'].values
+    misc = (stut,do_mam)
+
+    st.write(f"Selected/Typed value: {misc}")
 
 event = (selected_value,q_selected_value)
 if event[0] == "ויטמין שיא בעמ":
