@@ -23,7 +23,7 @@ from datetime import date,datetime,time,timedelta,datetime
 #streamlit run apptest.py
 # A function that filters a list of items based on the user query
 def search_function(searchterm: str):
-    df = pd.read_excel('eventDB.xlsx')
+    df = pd.read_excel('app/testing/eventDB.xlsx')
 
     # Access data from a specific column
     all_supplier_names = df['שם הספק'].values
@@ -32,7 +32,7 @@ def search_function(searchterm: str):
     return [item for item in unique_supplier_names if searchterm.lower() in item.lower()]
 
 def q_search_function(searchterm: str,supplier):
-    df = pd.read_excel('eventDB.xlsx')
+    df = pd.read_excel('app/testing/eventDB.xlsx')
     filtered_df = df[df["שם הספק"] == supplier]
     # Access data from a specific column
     all_supplier_names = filtered_df['סוג השירות'].values
@@ -154,7 +154,7 @@ st.title("V0.0.2 Demo")
 
     # Function to create a row of widgets (with row number input to assure unique keys)
 
-df = pd.read_excel('eventDB.xlsx')
+df = pd.read_excel('app/testing/eventDB.xlsx')
 # Access data from a specific column
 all_supplier_names = df['שם הספק'].values
 unique_supplier_names = sorted(set(all_supplier_names))
@@ -197,7 +197,7 @@ if(selected_value):
     )
 
 if(q_selected_value):
-    df = pd.read_excel('eventDB.xlsx')
+    df = pd.read_excel('app/testing/eventDB.xlsx')
     filtered_df = df[(df["שם הספק"] == selected_value) & (df["סוג השירות"] == q_selected_value)] 
     # Access data from a specific column
     no_mam = filtered_df['מחיר ללא מעמ'].values
@@ -207,7 +207,7 @@ if(q_selected_value):
     st.write(f"Selected/Typed value: {all_o_names}")
 
 if(q_selected_value):
-    df = pd.read_excel('eventDB.xlsx')
+    df = pd.read_excel('app/testing/eventDB.xlsx')
     filtered_df = df[(df["שם הספק"] == selected_value) & (df["סוג השירות"] == q_selected_value)] 
     # Access data from a specific column
     stut = filtered_df['סטטוס'].values
@@ -223,4 +223,5 @@ else: # alwase with if-else.. else-erorr.
     st.write("nothing")
 
 st.write(f"Selected/Typed value: {q_selected_value}")
+
 
