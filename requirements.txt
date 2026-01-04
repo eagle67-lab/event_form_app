@@ -1,8 +1,6 @@
 # Example requirements.txt file
 
 streamlit
-pip
-python
 pandas
 functools
 datetime
