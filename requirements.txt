@@ -2,6 +2,6 @@
 
 streamlit
 pandas
-functools
+#functools
 datetime
 streamlit_searchbox
