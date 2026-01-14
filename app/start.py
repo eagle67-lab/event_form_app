@@ -58,7 +58,7 @@ def get_guest_count():
 
 def create_supplier_list(searchterm: str):
 
-    df = pd.read_excel('eventDB.xlsx')
+    df = pd.read_excel('app/resources/eventDB.xlsx')
     all_supplier_names = df['שם הספק'].values
     unique_supplier_names = sorted(set(all_supplier_names))
 
@@ -66,7 +66,7 @@ def create_supplier_list(searchterm: str):
 
 def create_activity_list(searchterm: str,supplier):
 
-    df = pd.read_excel('eventDB.xlsx')
+    df = pd.read_excel('app/resources/eventDB.xlsx')
     filtered_df = df[df["שם הספק"] == supplier]
     all_supplier_names = filtered_df['סוג השירות'].values
     unique_supplier_names = sorted(set(all_supplier_names))
@@ -75,7 +75,7 @@ def create_activity_list(searchterm: str,supplier):
 
 def get_price(chosen_activity,supplier):
 
-    df = pd.read_excel('eventDB.xlsx')
+    df = pd.read_excel('app/resources/eventDB.xlsx')
     filtered_df = df[(df["שם הספק"] == supplier) & (df["סוג השירות"] == chosen_activity)] 
 
     regular_price = filtered_df['מחיר ללא מעמ'].values
@@ -85,7 +85,7 @@ def get_price(chosen_activity,supplier):
 
 def get_extra_data(chosen_activity,supplier):
 
-    df = pd.read_excel('eventDB.xlsx')
+    df = pd.read_excel('app/resources/eventDB.xlsx')
     filtered_df = df[(df["שם הספק"] == supplier) & (df["סוג השירות"] == chosen_activity)] 
 
     group_type = filtered_df['סטטוס'].values
@@ -181,3 +181,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
