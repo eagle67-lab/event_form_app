@@ -2,7 +2,9 @@
 
 streamlit
 pandas
-#functools
 datetime
 streamlit_searchbox
 openpyxl
+time
+docx.shared
+docxtpl
