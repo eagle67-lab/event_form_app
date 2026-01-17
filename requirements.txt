@@ -9,4 +9,5 @@ openpyxl
 #docx.shared
 python-docx==1.2.0
 docxtpl
+spire-doc==14.1.0
 Spire.Doc.Free
