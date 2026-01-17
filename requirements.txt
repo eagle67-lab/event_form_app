@@ -6,5 +6,6 @@ datetime
 streamlit_searchbox
 openpyxl
 #time
-docx.shared
+#docx.shared
+python-docx==1.2.0
 docxtpl
