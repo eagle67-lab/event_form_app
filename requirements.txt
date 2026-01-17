@@ -5,6 +5,6 @@ pandas
 datetime
 streamlit_searchbox
 openpyxl
-time
+#time
 docx.shared
 docxtpl
