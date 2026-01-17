@@ -3,10 +3,16 @@ import streamlit as st
 from docx.shared import Mm
 from docxtpl import DocxTemplate, InlineImage
 from TypeCast import *
+from spire.doc import *
+from spire.doc.common import *
 
 def complite_print(form):
     docx_file = create_docx(form)
-    pdf_output(docx_file)
+    document = Document()
+    document.LoadFromFile(docx_file) 
+    document.SaveToFile("event.pdf", FileFormat.PDF)
+    document.Close()
+    pdf_output("event.pdf")
 
 def create_docx(form):
     time_comp = ""
@@ -15,7 +21,7 @@ def create_docx(form):
     else:
         time_comp = f"בין ה{form.dates[0]} ל{form.dates[1]}"
 
-    doc = DocxTemplate("app/resources/Template.docx")
+    doc = DocxTemplate("Template.docx")
 
     context = {
         "event_name": form.user[0] ,
@@ -40,12 +46,10 @@ def create_docx(form):
     doc.render(context)
     doc.save("output.docx")
 
-    return 0 #docx_path #something?
+    return "output.docx" #docx_path #something?
 
-def pdf_output(docx_file):
-    pass
-    #st.download_button(label="Download text",data=message,file_name="message.pdf",on_click="ignore",type="primary",icon=":material/download:",)
-
-
+def pdf_output(pdf_file):
+    with open(pdf_file, "rb") as file:
+        st.download_button("Download file", file, pdf_file)
 
 
