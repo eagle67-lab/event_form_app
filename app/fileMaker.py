@@ -21,7 +21,7 @@ def create_docx(form):
     else:
         time_comp = f"בין ה{form.dates[0]} ל{form.dates[1]}"
 
-    doc = DocxTemplate("Template.docx")
+    doc = DocxTemplate("app/resources/Template.docx")
 
     context = {
         "event_name": form.user[0] ,
@@ -51,5 +51,6 @@ def create_docx(form):
 def pdf_output(pdf_file):
     with open(pdf_file, "rb") as file:
         st.download_button("Download file", file, pdf_file)
+
 
 
